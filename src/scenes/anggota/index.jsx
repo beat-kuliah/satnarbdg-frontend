@@ -72,7 +72,7 @@ const Anggota = () => {
             <Header title="Anggota" subtitle="Anggota" />
             <Box
                 m="40px 0 0 0"
-                heightgit ="75vh"
+                height ="75vh"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
