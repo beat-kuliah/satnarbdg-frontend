@@ -4,51 +4,63 @@ import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 
-const Anggota = () => {
+const Tahanan = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [penyidik, setPenyidik] = useState([]);
+    const [tahanan, setTahanan] = useState([]);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_API_URL + "penyidik")
+        fetch(process.env.REACT_APP_API_URL + "tahanan")
           .then(res => res.json())
           .then(
             (result) => {
-                setPenyidik(result);
+                setTahanan(result);
             },
             // Note: it's important to handle errors here
             // instead of a catch() block so that we don't swallow
             // exceptions from actual bugs in components.
             (error) => {
-                setPenyidik(error);
+                setTahanan(error);
             }
           )
       }, [])
 
     const columns = [
-        { field: "id", headerName: "ID" },
-        {
-            field: "nrp",
-            headerName: "NRP",
-            flex: 1,
-            cellClassName: "name-column--cell",
-        },
+        { field: "nik", headerName: "NIK" },
         {
             field: "name",
-            headerName: "Name",
+            headerName: "Nama Tersangka",
             flex: 1,
             cellClassName: "name-column--cell",
         },
         {
-            field: "telp",
-            headerName: "Phone Number",
+            field: "umur",
+            headerName: "Umur",
+            flex: 1,
+            cellClassName: "name-column--cell",
+        },
+        {
+            field: "pasal",
+            headerName: "Pasal",
             flex: 1
+        },
+        {
+            field: "diff",
+            headerName: "Lama Penahanan",
+            flex: 1
+        },
+        {
+            field: "penyidik",
+            headerName: "Penyidik",
+            flex: 1,
+            valueGetter: (params) =>
+                `${params.row.penyidik.name}`,
         },
     ]
 
     return (
         <Box m="20px">
-            <Header title="Anggota" subtitle="Anggota" />
+            <Header title="Tahanan" subtitle="Tahanan" />
             <Box
                 m="40px 0 0 0"
                 height ="75vh"
@@ -78,10 +90,10 @@ const Anggota = () => {
                     },
                 }}
             >
-                <DataGrid rows={penyidik} columns={columns} />
+                <DataGrid rows={tahanan} columns={columns} />
             </Box>
         </Box>
     )
 }
 
-export default Anggota
+export default Tahanan
