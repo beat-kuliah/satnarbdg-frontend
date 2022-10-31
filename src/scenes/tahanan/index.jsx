@@ -9,19 +9,6 @@ const Tahanan = () => {
     const colors = tokens(theme.palette.mode);
     const [tahanan, setTahanan] = useState([]);
 
-    useEffect(() => {
-        fetch(process.env.REACT_APP_API_URL + "tahanan")
-          .then(res => res.json())
-          .then(
-            (result) => {
-                setTahanan(result);
-            },
-            (error) => {
-                setTahanan(error);
-            }
-          )
-      }, [])
-
     const columns = [
         { field: "nik", headerName: "NIK" },
         {

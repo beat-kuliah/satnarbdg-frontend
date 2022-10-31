@@ -111,7 +111,7 @@ const Tahanan = () => {
     return (
         <Box m="20px">
             <Box display="flex" justifyContent="space-between">
-                <Header title="Tahanan" subtitle="Tahanan" />
+                <Header title="Perkara Ditangani" subtitle="Perkara Ditangani" />
                 <Box mb="30px">
                     <Button
                         onClick={handleOpenForm}
