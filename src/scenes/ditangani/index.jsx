@@ -27,7 +27,7 @@ const style = {
 };
 
 const checkoutSchema = yup.object().shape({
-    identitas: yup.number().integer().required("required"),
+    identitas: yup.string().required("required"),
     umur: yup.number().integer().required("required"),
     nama: yup.string().required("required"),
     tkp: yup.string().required("required"),
@@ -56,10 +56,30 @@ const Tahanan = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [date, setDate] = useState(dayjs('2022-04-07'));
 
+    const closeModal = () => {
+        setOpenForm(false);
+        setOpenSuccess(false);
+    }
+
     const handleFormSubmit = (values) => {
         values.date = date['$y'] + '-' + date['$D'] + '-' + (date['$M'] + 1);
         console.log(JSON.stringify(values, null, 2));
-        setOpenSuccess(true);
+        // setOpenSuccess(true);
+        fetch(process.env.REACT_APP_API_URL + "tahanan", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(values, null, 2),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setTahanan(data);
+                setOpenSuccess(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     useEffect(() => {
@@ -159,7 +179,7 @@ const Tahanan = () => {
                                             <TextField
                                                 fullWidth
                                                 variant="filled"
-                                                type="number"
+                                                type="text"
                                                 label="Identitas"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
@@ -236,19 +256,21 @@ const Tahanan = () => {
                                             />
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DesktopDatePicker
-                                                    label="For desktop"
+                                                    label="Tanggal Masuk"
                                                     value={date}
                                                     minDate={dayjs('2017-01-01')}
                                                     onChange={(newValue) => {
                                                         setDate(newValue);
                                                     }}
-                                                    renderInput={(params) => <TextField {...params} />}
+                                                    renderInput={(params) => <TextField {...params}
+                                                        sx={{ gridColumn: "span 2" }}
+                                                    />}
                                                 />
                                             </LocalizationProvider>
                                         </Box>
                                         <Box display="flex" justifyContent="end" mt="20px">
                                             <Button type="submit" color="secondary" variant="contained">
-                                                Create New User
+                                                Tambah
                                             </Button>
                                         </Box>
                                     </form>
@@ -270,9 +292,9 @@ const Tahanan = () => {
                                 </Box>
                                 <Box>
                                     <Button
+                                        onClick={closeModal}
                                         color="secondary"
                                         variant="contained"
-                                        href="/perkara_ditangani"
                                     >Close</Button>
                                 </Box>
                             </Box>
