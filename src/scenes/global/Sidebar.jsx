@@ -33,10 +33,32 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
+  const pathname = (window.location.pathname).split("/");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [selected, setSelected] = useState(() => {
+    if(pathname[1] === "anggota"){
+      return "Anggota";
+    }else if(pathname[1] === "barang_inventaris"){
+      return "Barang Inventaris";
+    }else if(pathname[1] === "perkara_ditangani"){
+      return "Perkara Ditangani";
+    }else if(pathname[1] === "tahanan"){
+      return "Jumlah Tahanan";
+    }else if(pathname[1] === "rencana"){
+      return "Rencana Kegiatan";
+    }else if(pathname[1] === "lampiran"){
+      return "Lampiran Kegiatan";
+    }else if(pathname[1] === "bukti"){
+      return "Barang Bukti";
+    }else if(pathname[1] === "Referensi"){
+      return "referensi";
+    }else{
+      return "Dashboard"
+    }
+  });
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
+  
 
   return (
     <Box
@@ -77,7 +99,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                  Satuan Narkoba
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
